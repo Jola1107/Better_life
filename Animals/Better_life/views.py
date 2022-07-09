@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from .forms import LoginUserForm, ProfileForm
 from django.contrib.auth import get_user_model, authenticate, login, logout
 User = get_user_model()
+from .models import Profile
 
 
 
@@ -46,12 +47,13 @@ class AddProfileUserView(View):
             password = form.cleaned_data['password']
             user = User.objects.filter(username=username)
             if user:
-                form.add_error('login-user', "Login istnieje")
+                form.add_error('username', "Użytkownik o takim loginie już istnieje")
             else:
                 user = User.objects.create_user(first_name=first_name, password=password, email=email,
-                                                last_name=last_name, city=city, post_code=post_code,
-                                                street=street, phone=phone, username=username)
-                login(request, user)
+                                                last_name=last_name, username=username)
+
+                Profile.objects.create(user=user, city=city, post_code=post_code, street=street, phone=phone)
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
 
         return render(request, self.template_name, context)
 
@@ -76,12 +78,12 @@ class LoginUserView(View):
                 form.add_error('username', 'Użytkowniek nie istnieje')
             else:
                 login(request, user)
-        return render(request, self.template_name, context)
+        return render(request, 'start.html', context)
 
 # logout for a registered user
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return redirect('login-user')
+        return redirect('start')
 
 

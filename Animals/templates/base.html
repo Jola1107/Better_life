@@ -9,7 +9,9 @@
         {% endblock %}
 
     </body>
+    <p>Zalogowany użytkownik: {{user}} </p>
     {% if user.is_anonymous %}
+
         <a href="{%url  'login-user'%}">Zaloguj</a>
     {% else %}
         <a href="{%url  'logout'%}">Wyloguj</a>

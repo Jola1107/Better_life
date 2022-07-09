@@ -1,5 +1,7 @@
 from django import forms
 from .models import User, Profile, Animal, Category, Image, Message
+from django.core.exceptions import ValidationError
+
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -10,9 +12,17 @@ class UserForm(forms.ModelForm):
 
 
 class ProfileForm(forms.ModelForm):
+    username = forms.CharField(max_length=64)
     email = forms.CharField(widget=forms.EmailInput)
     password = forms.CharField(widget=forms.PasswordInput)
-    username = forms.CharField(max_length=64)
+    repeat_password = forms.CharField(widget=forms.PasswordInput)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        repeat_password = cleaned_data.get("repeat_password")
+        if password != repeat_password:
+             raise ValidationError("Hasła nie są takie same")
 
     class Meta:
         model = Profile
