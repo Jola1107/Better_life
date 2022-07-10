@@ -5,17 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="799aacc7-fd6a-4c8d-be75-7a4354ffd74f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/Animals/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Animals/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/Animals/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Animals/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/Better_life/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Better_life/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/Better_life/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Better_life/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Animals/Better_life/templates/login_user.html" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Better_life/templates/login_user.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/Better_life/templates/start.html" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Better_life/templates/start.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/Better_life/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Better_life/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Animals/animal" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/animal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +55,9 @@
       <option name="presentableId" value="Default" />
       <updated>1656762568668</updated>
       <workItem from="1656762570900" duration="10895000" />
-      <workItem from="1657377957208" duration="3417000" />
+      <workItem from="1657377957208" duration="3509000" />
+      <workItem from="1657439733026" duration="2750000" />
+      <workItem from="1657447174730" duration="649000" />
     </task>
     <servers />
   </component>

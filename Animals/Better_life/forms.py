@@ -35,29 +35,28 @@ class AnimalForm(forms.ModelForm):
 
     class Meta:
         model = Animal
-        fields = ('name', 'description', 'sex', 'movie',
-                  'is_adopted', 'created', 'closed')
+        fields = ['name', 'description', 'sex', 'movie',
+                  'is_adopted', 'closed']
 
 
 class CategoryForm(forms.ModelForm):
 
     class Meta:
         model = Category
-        fields = ('name',)
+        fields = ['name',]
 
 
 class ImageForm(forms.ModelForm):
 
     class Meta:
         model = Image
-        fields = ('title', 'path')
+        fields = ['title', 'path']
 
 
 class MessageForm(forms.ModelForm):
-
     class Meta:
         model = Message
-        fields = ('text', 'email', 'phone')
+        fields = ['text', 'email', 'phone']
 
 
 class LoginUserForm(forms.Form):

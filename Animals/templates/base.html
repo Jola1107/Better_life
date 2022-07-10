@@ -3,13 +3,14 @@
 <html>
     <head><meta charset="utf-8"></head>
     <body>
-        <img src="{% static 'logo.jpg'%}">
+    <p>Zalogowany użytkownik: {{user}} </p>
+        <img src="{% static 'logo.jpg'%}" width="500px" height="200px">
 
         {% block content %}
         {% endblock %}
 
     </body>
-    <p>Zalogowany użytkownik: {{user}} </p>
+
     {% if user.is_anonymous %}
 
         <a href="{%url  'login-user'%}">Zaloguj</a>

@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
-from .forms import LoginUserForm, ProfileForm
+from .forms import LoginUserForm, ProfileForm, AnimalForm
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model, authenticate, login, logout
 User = get_user_model()
-from .models import Profile
+from .models import Profile, Animal, Message
+from django.views.generic import CreateView, DeleteView, UpdateView, ListView
 
 
 
@@ -55,7 +58,7 @@ class AddProfileUserView(View):
                 Profile.objects.create(user=user, city=city, post_code=post_code, street=street, phone=phone)
                 login(request, user, backend='django.contrib.auth.backends.ModelBackend')
 
-        return render(request, self.template_name, context)
+        return render(request, 'start.html', context)
 
 
 #login of a registered user
@@ -87,3 +90,47 @@ class LogoutView(View):
         return redirect('start')
 
 
+# add animal
+
+class AddAnimalView(LoginRequiredMixin, View):
+    template_name = 'add_animal.html'
+    form_class = AnimalForm
+    login_url = '/login/'
+    redirect_field_name = 'add-animal'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        context = {'form': form}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        context = {'form': form}
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            description = form.cleaned_data['description']
+            sex = form.cleaned_data['sex']
+            movie = form.cleaned_data['movie']
+            is_adopted = form.cleaned_data['is_adopted']
+            created = form.cleaned_data['created']
+            closed = form.cleaned_data['closed']
+            user = form.cleaned_data['user']
+            category = form.cleaned_data['category']
+            user = authenticate(username=username)
+            if user is None:
+                form.add_error('username', 'Użytkowniek nie istnieje')
+            else:
+                animal = Animal.objects.create(name=name, description=description,
+                                               sex=sex, movie=movie, is_adopted=is_adopted,
+                                               created=created, closed=closed, user=user, category=category)
+
+
+        return render(request, self.template_name, context)
+
+
+
+class MessageView(CreateView):
+    model = Message
+    fields = ['text', 'email', 'phone']
+    template_name = 'message.html'
+    success_url = '/'

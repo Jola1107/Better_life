@@ -25,4 +25,6 @@ urlpatterns = [
     path('login/', ex_views.LoginUserView.as_view(), name='login-user'),
     path('logout/', ex_views.LogoutView.as_view(), name='logout'),
     path('register/', ex_views.AddProfileUserView.as_view(), name='register'),
+    path('add_animal/', ex_views.AddAnimalView.as_view(), name='add-animal'),
+    path('message/', ex_views.MessageView.as_view(), name='message'),
 ]
