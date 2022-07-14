@@ -19,9 +19,9 @@ class Profile(models.Model):
 
 
 SEX = (
-    (1, 'Female'),
-    (2, 'Male'),
-    (3, 'Undefined')
+    (1, 'Żeńska'),
+    (2, 'Męska'),
+    (3, 'Nieznana')
 )
 
 
@@ -33,10 +33,13 @@ class Animal(models.Model):
     name = models.CharField(max_length=64, blank=True)
     description = models.TextField()
     sex = models.IntegerField(choices=SEX)
-    movie = models.URLField(null=True)
+    age = models.SmallIntegerField(null=True)
+    weight = models.SmallIntegerField(null=True)
+    breed = models.CharField(max_length=128, null=True)
+    movie = models.URLField()
     is_adopted = models.BooleanField()
     created = models.DateTimeField(auto_now_add=True)
-    closed = models.DateTimeField()
+    closed = models.DateTimeField(null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 

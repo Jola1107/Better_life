@@ -112,18 +112,18 @@ class AddAnimalView(LoginRequiredMixin, View):
             sex = form.cleaned_data['sex']
             movie = form.cleaned_data['movie']
             is_adopted = form.cleaned_data['is_adopted']
-            created = form.cleaned_data['created']
+            # created = form.cleaned_data['created']
             closed = form.cleaned_data['closed']
-            user = form.cleaned_data['user']
-            category = form.cleaned_data['category']
-            user = authenticate(username=username)
-            if user is None:
-                form.add_error('username', 'Użytkowniek nie istnieje')
-            else:
-                animal = Animal.objects.create(name=name, description=description,
-                                               sex=sex, movie=movie, is_adopted=is_adopted,
-                                               created=created, closed=closed, user=user, category=category)
-
+            # user = form.cleaned_data['user']
+            # category = form.cleaned_data['category']
+            # user = authenticate(username=username)
+            # if user is None:
+            #     form.add_error('username', 'Użytkowniek nie istnieje')
+            # else:
+            animal = Animal.objects.create(name=name, description=description,
+                                           sex=sex, movie=movie, is_adopted=is_adopted,
+                                           closed=closed)
+            context['animal'] = animal
 
         return render(request, self.template_name, context)
 
@@ -133,4 +133,4 @@ class MessageView(CreateView):
     model = Message
     fields = ['text', 'email', 'phone']
     template_name = 'message.html'
-    success_url = '/'
+    success_url = 'start.html'

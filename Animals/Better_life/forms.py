@@ -1,6 +1,7 @@
 from django import forms
 from .models import User, Profile, Animal, Category, Image, Message
 from django.core.exceptions import ValidationError
+from django.core.validators import EmailValidator, URLValidator
 
 
 class UserForm(forms.ModelForm):
@@ -13,7 +14,7 @@ class UserForm(forms.ModelForm):
 
 class ProfileForm(forms.ModelForm):
     username = forms.CharField(max_length=64)
-    email = forms.CharField(widget=forms.EmailInput)
+    email = forms.CharField(widget=forms.EmailInput, validators=[EmailValidator()])
     password = forms.CharField(widget=forms.PasswordInput)
     repeat_password = forms.CharField(widget=forms.PasswordInput)
 
@@ -32,7 +33,8 @@ class ProfileForm(forms.ModelForm):
 
 
 class AnimalForm(forms.ModelForm):
-
+    movie = forms.CharField(validators=[URLValidator()], required=False)
+    closed = forms.DateTimeField(required=False)
     class Meta:
         model = Animal
         fields = ['name', 'description', 'sex', 'movie',
