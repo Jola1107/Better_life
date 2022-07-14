@@ -7,14 +7,16 @@
 <!--        {{ form }}-->
 
   </form>
-<a href="{% url 'register' %}">Zarejestruj nowego użytkownika</a></br>
-</br>
-<a href="{% url 'add-animal' %}">Dodaj zwierzę do adopcji</a></br>
-</br>
 
-<a href="{% url 'message' %}">Wyślij wiadomość w sprawie adopcji</a></br>
     <ul>
+        <a href="{% url 'register' %}">Zarejestruj nowego użytkownika</a></br>
+        </br>
+        <a href="{% url 'add-animal' %}">Dodaj zwierzę do adopcji</a></br>
+        </br>
 
+        <a href="{% url 'message' %}">Wyślij wiadomość w sprawie adopcji</a></br>
+        </br>
+        <a href="{% url 'add-category' %}">Dodaj kategorię</a></br>
     </ul>
 
 {% endblock %}

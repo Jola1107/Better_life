@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
-from .forms import LoginUserForm, ProfileForm, AnimalForm
+from .forms import LoginUserForm, ProfileForm, CategoryForm, AnimalForm
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model, authenticate, login, logout
 User = get_user_model()
-from .models import Profile, Animal, Message
+from .models import Profile, Animal, Message, Category
 from django.views.generic import CreateView, DeleteView, UpdateView, ListView
 
 
@@ -96,7 +96,7 @@ class AddAnimalView(LoginRequiredMixin, View):
     template_name = 'add_animal.html'
     form_class = AnimalForm
     login_url = '/login/'
-    redirect_field_name = 'add-animal'
+    redirect_field_name = 'start'
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
@@ -110,25 +110,59 @@ class AddAnimalView(LoginRequiredMixin, View):
             name = form.cleaned_data['name']
             description = form.cleaned_data['description']
             sex = form.cleaned_data['sex']
+            age = form.cleaned_data['age']
+            weight = form.cleaned_data['weight']
+            breed = form.cleaned_data['breed']
             movie = form.cleaned_data['movie']
             is_adopted = form.cleaned_data['is_adopted']
-            # created = form.cleaned_data['created']
-            closed = form.cleaned_data['closed']
-            # user = form.cleaned_data['user']
-            # category = form.cleaned_data['category']
+            created = form.cleaned_data['created']
+            closed_date = form.cleaned_data['closed_date']
+            category = form.cleaned_data['category']
+
             # user = authenticate(username=username)
             # if user is None:
             #     form.add_error('username', 'Użytkowniek nie istnieje')
             # else:
             animal = Animal.objects.create(name=name, description=description,
-                                           sex=sex, movie=movie, is_adopted=is_adopted,
-                                           closed=closed)
+                                            sex=sex, age=age, weight=weight,
+                                            breed=breed, movie=movie,
+                                            is_adopted=is_adopted, created=created,
+                                            closed_date=closed_date, category=category)
             context['animal'] = animal
 
         return render(request, self.template_name, context)
 
+# class AddAnimalView(LoginRequiredMixin, CreateView):
+#     login_url = '/login_user/'
+#     redirect_field_name = 'start.html'
+#     model = Animal
+#     fields = ['name', 'description', 'sex', 'age', 'weight',
+#               'breed', 'movie', 'is_adopted', 'closed_date',
+#               'category']
 
 
+# add category
+class AddCategoryView(View):
+    template_name = 'add_category.html'
+    form_class = CategoryForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        context = {'form': form}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        context = {form:'form'}
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            category = Category.objects.create(name=name)
+            context['category'] = category
+        return render(request, 'start.html', context)
+
+
+
+# send message
 class MessageView(CreateView):
     model = Message
     fields = ['text', 'email', 'phone']

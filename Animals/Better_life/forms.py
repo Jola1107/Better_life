@@ -2,7 +2,7 @@ from django import forms
 from .models import User, Profile, Animal, Category, Image, Message
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator, URLValidator
-
+from datetime import datetime, date
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -30,22 +30,30 @@ class ProfileForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'city',
                   'post_code', 'street', 'phone', 'email')
 
+SEX = (
+    (1, 'Żeńska'),
+    (2, 'Męska'),
+    (3, 'Nieznana')
+)
+
+class AnimalForm(forms.Form):
+    name = forms.CharField(label='imię:', max_length=64)
+    description = forms.CharField(label='opis:', widget=forms.Textarea)
+    sex = forms.ChoiceField(choices=SEX)
+    age = forms.IntegerField(label='wiek:')
+    weight = forms.IntegerField(label='waga:')
+    breed = forms.CharField(label='rasa/w typie rasy:')
+    movie = forms.CharField(validators=[URLValidator()], required=False, label='link do filmiku:')
+    is_adopted = forms.BooleanField(label='czy adoptowany?', required=False)
+    closed_date = forms.DateField(required=False, label='data adopcji:')
+    created = forms.DateField(label='data dodania ogłoszenia:', initial=date.today)
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), label='kategoria:')
 
 
-class AnimalForm(forms.ModelForm):
-    movie = forms.CharField(validators=[URLValidator()], required=False)
-    closed = forms.DateTimeField(required=False)
-    class Meta:
-        model = Animal
-        fields = ['name', 'description', 'sex', 'movie',
-                  'is_adopted', 'closed']
 
+class CategoryForm(forms.Form):
+    name = forms.CharField(label='nazwa kategorii:')
 
-class CategoryForm(forms.ModelForm):
-
-    class Meta:
-        model = Category
-        fields = ['name',]
 
 
 class ImageForm(forms.ModelForm):
@@ -65,14 +73,3 @@ class LoginUserForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
-# register user
-# class AddProfileUserForm(forms.Form):
-#     first_name = forms.CharField(max_length=64)
-#     last_name = forms.CharField(max_length=64)
-#     city = forms.CharField(max_length=64)
-#     post_code = forms.CharField(max_length=10)
-#     street = forms.CharField(max_length=64)
-#     phone = forms.CharField(max_length=16)
-#     email = forms.CharField(max_length=64)
-#     username = forms.CharField(max_length=64)
-#     password = forms.CharField(widget=forms.PasswordInput)

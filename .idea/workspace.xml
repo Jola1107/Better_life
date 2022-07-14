@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="799aacc7-fd6a-4c8d-be75-7a4354ffd74f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Animals/Better_life/templates/add_category.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Animals/Animals/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Animals/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Animals/Better_life/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Better_life/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/Better_life/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/Better_life/migrations/0002_auto_20220710_1307.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Animals/Better_life/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Better_life/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Animals/Better_life/templates/start.html" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Better_life/templates/start.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Animals/Better_life/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Better_life/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Animals/animal" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/animal" afterDir="false" />
     </list>
@@ -65,6 +66,7 @@
       <workItem from="1657480955460" duration="1146000" />
       <workItem from="1657639631915" duration="2102000" />
       <workItem from="1657787526238" duration="2909000" />
+      <workItem from="1657790449725" duration="4253000" />
     </task>
     <servers />
   </component>
