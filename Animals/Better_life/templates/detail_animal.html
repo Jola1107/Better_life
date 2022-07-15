@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Kategoria: {{category.name}}</h1>
+    <h1>Kategoria: {{animal.category.name}}</h1>
     <h1>Imię: {{animal.name}}</h1>
     <h1>Opis: {{animal.description}}</h1>
-    <h1>Płeć: {{animal.sex}}</h1>
+    <h1>Płeć: {{animal.get_sex_display}}</h1>
     <h1>Wiek: {{animal.age}} </h1>
     <h1>Waga: {{animal.weight}}</h1>
     <h1>Rasa/w typie rasy: {{animal.breed}}</h1>
     <h1>Filmik: {{animal.movie}}</h1>
     <h1>Czy adoptowany: {{animal.is_adopted}}</h1>
     <h1>Data dodania: {{animal.created}}</h1>
-    <h1>Dom tymczasowy: {{user.name}}</h1>
+    <h1>Dom tymczasowy: {{animal.user.username}}</h1>
 
 {% endblock %}
 

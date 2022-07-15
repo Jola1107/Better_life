@@ -153,14 +153,12 @@ class AnimalListView(ListView):
 class DetailAnimalView(View):
     def get(self, request, id):
         animal = Animal.objects.get(pk=id)
-        category = Category.objects.get(pk=id)
-        user = User.objects.get(pk=id)
+
 
         context = {
-            'animal': animal,
-            'category': category,
-            'user': user,
+            'animal': animal
         }
+
         return render(request, 'detail_animal.html', context)
 
 

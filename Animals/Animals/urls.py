@@ -29,5 +29,5 @@ urlpatterns = [
     path('message/', ex_views.MessageView.as_view(), name='message'),
     path('add_category/', ex_views.AddCategoryView.as_view(), name='add-category'),
     path('for_adoption/', ex_views.AnimalListView.as_view(), name='adoption'),
-    path('detail_animal/', ex_views.DetailAnimalView.as_view(), name='detail-animal'),
+    path('detail_animal/<int:id>/', ex_views.DetailAnimalView.as_view(), name='detail-animal'),
 ]
