@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
 from .forms import (LoginUserForm, ProfileForm, CategoryForm,
-                    AnimalForm, MessageForm, ResetPasswordForm)
+                    AnimalForm, MessageForm)
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth import get_user_model, authenticate, login, logout
@@ -139,15 +139,29 @@ class AddAnimalView(LoginRequiredMixin, View):
             context['animal'] = animal
             context['message'] = 'Dodano zwierzę do adopcji'
 
-        return render(request, self.template_name, context)
+        return render(request, 'start.html', context)
 
-# class AddAnimalView(LoginRequiredMixin, CreateView):
-#     login_url = '/login_user/'
-#     redirect_field_name = 'start.html'
-#     model = Animal
-#     fields = ['name', 'description', 'sex', 'age', 'weight',
-#               'breed', 'movie', 'is_adopted', 'closed_date',
-#               'category']
+# lista zwierząt do adopcji
+
+class AnimalListView(ListView):
+    model = Animal
+    template_name = 'adoption.html'
+
+
+# detail animal
+
+class DetailAnimalView(View):
+    def get(self, request, id):
+        animal = Animal.objects.get(pk=id)
+        category = Category.objects.get(pk=id)
+        user = User.objects.get(pk=id)
+
+        context = {
+            'animal': animal,
+            'category': category,
+            'user': user,
+        }
+        return render(request, 'detail_animal.html', context)
 
 
 # add category

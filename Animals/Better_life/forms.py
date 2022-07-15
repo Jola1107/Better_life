@@ -82,6 +82,7 @@ class LoginUserForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
+
 # reset password
 class ResetPasswordForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput, label="Wprowadz nowe hasło")

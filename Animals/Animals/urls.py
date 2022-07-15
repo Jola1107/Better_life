@@ -28,5 +28,6 @@ urlpatterns = [
     path('add_animal/', ex_views.AddAnimalView.as_view(), name='add-animal'),
     path('message/', ex_views.MessageView.as_view(), name='message'),
     path('add_category/', ex_views.AddCategoryView.as_view(), name='add-category'),
-
+    path('for_adoption/', ex_views.AnimalListView.as_view(), name='adoption'),
+    path('detail_animal/', ex_views.DetailAnimalView.as_view(), name='detail-animal'),
 ]
