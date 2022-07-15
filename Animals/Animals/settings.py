@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
+
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -159,6 +160,7 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST_USER = 'nana83@interia.pl'

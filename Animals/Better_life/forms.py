@@ -69,13 +69,17 @@ class ImageForm(forms.ModelForm):
         model = Image
         fields = ['title', 'path']
 
-
+# message form
 class MessageForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea, label='wiadomość:')
     email = forms.EmailField(label='Twój adres email:')
     phone = forms.CharField(label='Twój telefon kontaktowy:')
     animal = forms.ModelChoiceField(required=False, label='zwierzę, którego dotyczy wiadomośc:', queryset=Animal.objects.all())
-
+    # def send_email(self):
+    #     text = self.cleaned_data['text']
+    #     email = self.cleaned_data['email']
+    #     phone = self.cleaned_data['phone']
+    #     animal = self.cleaned_data['animal']
 
 # login user
 class LoginUserForm(forms.Form):

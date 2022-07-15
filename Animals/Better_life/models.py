@@ -46,6 +46,8 @@ class Animal(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
 
 class Image(models.Model):
     title = models.CharField(max_length=24)
@@ -57,6 +59,9 @@ class Message(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=16)
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.animal
 
 
 

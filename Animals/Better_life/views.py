@@ -8,8 +8,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.contrib.auth import get_user_model, authenticate, login, logout
 User = get_user_model()
 from .models import Profile, Animal, Message, Category
-from django.views.generic import CreateView, DeleteView, UpdateView, ListView
-from django.core.mail import send_mail
+from django.views.generic import FormView, CreateView, DeleteView, UpdateView, ListView
+from django.core.mail import send_mail, BadHeaderError
 
 
 
@@ -51,10 +51,12 @@ class AddProfileUserView(View):
             if user:
                 form.add_error('username', "Użytkownik o takim loginie już istnieje")
             else:
-                user = User.objects.create_user(first_name=first_name, password=password, email=email,
-                                                last_name=last_name, username=username)
+                user = User.objects.create_user(password=password, email=email, username=username)
 
-                Profile.objects.create(user=user, city=city, post_code=post_code, street=street, phone=phone)
+                Profile.objects.create(user=user, first_name=first_name,
+                                       last_name=last_name, city=city,
+                                       post_code=post_code, street=street,
+                                       phone=phone)
                 login(request, user, backend='django.contrib.auth.backends.ModelBackend')
 
         return render(request, 'start.html', context)
@@ -184,31 +186,50 @@ class AddCategoryView(View):
 
 
 # send message
-class MessageView(CreateView):
+class MessageView(FormView):
     template_name = 'message.html'
     form_class = MessageForm
+    success_url = '/'
+    def form_valid(self, form):
+        subject = 'Zapytanie o zwierzę do adopcji'
+        body = {
+            'text': form.cleaned_data['text'],
+            'email': form.cleaned_data['email'],
+            'phone': form.cleaned_data['phone'],
+            'animal': form.cleaned_data['animal']
+        }
+        message = body
 
-    def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        context = {'form': form}
-        return render(request, self.template_name, context)
+        try:
+            send_mail(subject, message, 'nana83@interia.pl', ['nana83@interia.pl'])
+        except BadHeaderError:
+            return HttpResponse('Invalid header found')
 
-    def post(self, request, *args, **kwargs):
-        emailSend = False
-        form = self.form_class(request.POST)
+        return redirect('start.html')
 
-        if form.is_valid():
-            subject = "Wiadomość została wysłana"
-            text = form.cleaned_data['text']
-            email = form.cleaned_data['email']
-            phone = form.cleaned_data['phone']
-            animal = form.cleaned_data['animal']
 
-            send_mail(subject, message=text, from_email='nana83@interia.pl', recipient_list=[email], fail_silently=False)
-            emailSend = True
-        else:
-            form = MessageForm()
-
-        return render(request, 'start.html', {form: 'form', emailSend:'emailSend'})
+    # def get(self, request, *args, **kwargs):
+    #     form = self.form_class()
+    #     context = {'form': form}
+    #     return render(request, self.template_name, context)
+    #
+    # def post(self, request, *args, **kwargs):
+    #     emailSend = False
+    #     form = self.form_class(request.POST)
+    #
+    #     if form.is_valid():
+    #         subject = "Wiadomość została wysłana"
+    #         text = form.cleaned_data['text']
+    #         email = form.cleaned_data['email']
+    #         phone = form.cleaned_data['phone']
+    #         animal = form.cleaned_data['animal']
+    #
+    #         send_mail(subject, message=text, from_email='nana83@interia.pl',
+    #                   recipient_list=[email], fail_silently=False)
+    #         emailSend = True
+    #     else:
+    #         form = MessageForm()
+    #
+    #     return render(request, 'start.html', {form: 'form', emailSend:'emailSend'})
 
 
