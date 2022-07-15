@@ -25,6 +25,13 @@ class ProfileForm(forms.ModelForm):
         if password != repeat_password:
              raise ValidationError("Hasła nie są takie same")
 
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     username = cleaned_data.get("username")
+    #
+    #     if username is not None:
+    #          raise ValidationError("Użytkownik o takim loginie już istnieje")
+
     class Meta:
         model = Profile
         fields = ('first_name', 'last_name', 'city',
@@ -63,13 +70,26 @@ class ImageForm(forms.ModelForm):
         fields = ['title', 'path']
 
 
-class MessageForm(forms.ModelForm):
-    class Meta:
-        model = Message
-        fields = ['text', 'email', 'phone']
+class MessageForm(forms.Form):
+    text = forms.CharField(widget=forms.Textarea, label='wiadomość:')
+    email = forms.EmailField(label='Twój adres email:')
+    phone = forms.CharField(label='Twój telefon kontaktowy:')
+    animal = forms.ModelChoiceField(required=False, label='zwierzę, którego dotyczy wiadomośc:', queryset=Animal.objects.all())
 
 
+# login user
 class LoginUserForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
+# reset password
+class ResetPasswordForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput, label="Wprowadz nowe hasło")
+    repeat_password = forms.CharField(widget=forms.PasswordInput, label='Powtórz hasło')
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        repeat_password = cleaned_data.get("repeat_password")
+        if password != repeat_password:
+             raise ValidationError("Hasła nie są takie same")

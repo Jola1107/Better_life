@@ -1,26 +1,25 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
-from .forms import LoginUserForm, ProfileForm, CategoryForm, AnimalForm
+from .forms import (LoginUserForm, ProfileForm, CategoryForm,
+                    AnimalForm, MessageForm, ResetPasswordForm)
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth import get_user_model, authenticate, login, logout
 User = get_user_model()
 from .models import Profile, Animal, Message, Category
 from django.views.generic import CreateView, DeleteView, UpdateView, ListView
+from django.core.mail import send_mail
 
 
 
 #start view
 class StartView(View):
     template_name = 'start.html'
-    # form_class = LoginUserForm
     form_class = ProfileForm
 
     def get(self, request):
-        # form1 = self.form_class()
         form = self.form_class()
-        # context1 = {'form1': form1}
         context = {'form': form}
         return render(request, self.template_name, context)
 
@@ -79,6 +78,8 @@ class LoginUserView(View):
             user = authenticate(username=username, password=password)
             if user is None:
                 form.add_error('username', 'Użytkowniek nie istnieje')
+            elif password is None:
+                form.add_error('password', 'Nieprawodłowe hasło')
             else:
                 login(request, user)
         return render(request, 'start.html', context)
@@ -93,10 +94,13 @@ class LogoutView(View):
 # add animal
 
 class AddAnimalView(LoginRequiredMixin, View):
+    # permission_required = 'auth.add_animal'
+
     template_name = 'add_animal.html'
     form_class = AnimalForm
     login_url = '/login/'
     redirect_field_name = 'start'
+
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
@@ -106,6 +110,7 @@ class AddAnimalView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         context = {'form': form}
+
         if form.is_valid():
             name = form.cleaned_data['name']
             description = form.cleaned_data['description']
@@ -118,17 +123,21 @@ class AddAnimalView(LoginRequiredMixin, View):
             created = form.cleaned_data['created']
             closed_date = form.cleaned_data['closed_date']
             category = form.cleaned_data['category']
-
+            cat = Category.objects.get(name=category)
+            user = request.user
+            if user.is_authenticated:
             # user = authenticate(username=username)
             # if user is None:
             #     form.add_error('username', 'Użytkowniek nie istnieje')
             # else:
-            animal = Animal.objects.create(name=name, description=description,
-                                            sex=sex, age=age, weight=weight,
-                                            breed=breed, movie=movie,
-                                            is_adopted=is_adopted, created=created,
-                                            closed_date=closed_date, category=category)
+                animal = Animal.objects.create(name=name, description=description,
+                                               sex=sex, age=age, weight=weight,
+                                               breed=breed, movie=movie,
+                                               is_adopted=is_adopted, created=created,
+                                               closed_date=closed_date, category=cat, user=user)
+            # Category.objects.create(animal=animal, name=cat)
             context['animal'] = animal
+            context['message'] = 'Dodano zwierzę do adopcji'
 
         return render(request, self.template_name, context)
 
@@ -164,7 +173,30 @@ class AddCategoryView(View):
 
 # send message
 class MessageView(CreateView):
-    model = Message
-    fields = ['text', 'email', 'phone']
     template_name = 'message.html'
-    success_url = 'start.html'
+    form_class = MessageForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        context = {'form': form}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        emailSend = False
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            subject = "Wiadomość została wysłana"
+            text = form.cleaned_data['text']
+            email = form.cleaned_data['email']
+            phone = form.cleaned_data['phone']
+            animal = form.cleaned_data['animal']
+
+            send_mail(subject, message=text, from_email='nana83@interia.pl', recipient_list=[email], fail_silently=False)
+            emailSend = True
+        else:
+            form = MessageForm()
+
+        return render(request, 'start.html', {form: 'form', emailSend:'emailSend'})
+
+

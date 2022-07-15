@@ -28,4 +28,5 @@ urlpatterns = [
     path('add_animal/', ex_views.AddAnimalView.as_view(), name='add-animal'),
     path('message/', ex_views.MessageView.as_view(), name='message'),
     path('add_category/', ex_views.AddCategoryView.as_view(), name='add-category'),
+
 ]

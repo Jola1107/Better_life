@@ -159,3 +159,10 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = 'nana83@interia.pl'
+EMAIL_HOST = 'poczta.interia.pl'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = True
+EMAIL_HOST_PASSWORD = 'Magda11112007!'
