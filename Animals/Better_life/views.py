@@ -9,8 +9,14 @@ from django.contrib.auth import get_user_model, authenticate, login, logout
 User = get_user_model()
 from .models import Profile, Animal, Message, Category
 from django.views.generic import FormView, CreateView, DeleteView, UpdateView, ListView
-from django.core.mail import send_mail, BadHeaderError
+from django.core.mail import send_mail, BadHeaderError, EmailMultiAlternatives
+from django.template.loader import get_template
 
+
+# from django.contrib import messages
+# from django.conf import settings
+# from mailchimp_marketing import Client
+# from mailchimp_marketing.api_client import ApiClientError
 
 
 #start view
@@ -47,9 +53,14 @@ class AddProfileUserView(View):
             phone = form.cleaned_data['phone']
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
+            repeat_password = form.cleaned_data["repeat_password"]
             user = User.objects.filter(username=username)
             if user:
                 form.add_error('username', "Użytkownik o takim loginie już istnieje")
+                return render(request, self.template_name, {'form': form})
+            elif password != repeat_password:
+                form.add_error('password', "Hasła nie są takie same")
+                return render(request, self.template_name, {'form': form})
             else:
                 user = User.objects.create_user(password=password, email=email, username=username)
 
@@ -79,9 +90,8 @@ class LoginUserView(View):
             password = form.cleaned_data['password']
             user = authenticate(username=username, password=password)
             if user is None:
-                form.add_error('username', 'Użytkowniek nie istnieje')
-            elif password is None:
-                form.add_error('password', 'Nieprawodłowe hasło')
+                form.add_error('username', 'Popraw login lub hasło')
+                return render(request, self.template_name, {'form': form})
             else:
                 login(request, user)
         return render(request, 'start.html', context)
@@ -127,6 +137,8 @@ class AddAnimalView(LoginRequiredMixin, View):
             category = form.cleaned_data['category']
             cat = Category.objects.get(name=category)
             user = request.user
+
+
             if user.is_authenticated:
             # user = authenticate(username=username)
             # if user is None:
@@ -186,50 +198,134 @@ class AddCategoryView(View):
 
 
 # send message
-class MessageView(FormView):
-    template_name = 'message.html'
-    form_class = MessageForm
-    success_url = '/'
-    def form_valid(self, form):
-        subject = 'Zapytanie o zwierzę do adopcji'
-        body = {
-            'text': form.cleaned_data['text'],
-            'email': form.cleaned_data['email'],
-            'phone': form.cleaned_data['phone'],
-            'animal': form.cleaned_data['animal']
-        }
-        message = body
+# class MessageView(FormView):
+#     template_name = 'message.html'
+#     form_class = MessageForm
+#     success_url = '/'
+#     def form_valid(self, form):
+#         subject = 'Zapytanie o zwierzę do adopcji'
+#         body = {
+#             'text': form.cleaned_data['text'],
+#             'email': form.cleaned_data['email'],
+#             'phone': form.cleaned_data['phone'],
+#             'animal': form.cleaned_data['animal']
+#         }
+#         message = body
+#
+#         try:
+#             send_mail(subject, message, 'nana83@interia.pl', ['nana83@interia.pl'])
+#         except BadHeaderError:
+#             return HttpResponse('Invalid header found')
+#
+#         return redirect('start.html')
 
-        try:
-            send_mail(subject, message, 'nana83@interia.pl', ['nana83@interia.pl'])
-        except BadHeaderError:
-            return HttpResponse('Invalid header found')
+class MessageView(View):
+    # template_name = 'message.html'
+    # form_class = MessageForm
+    def get(self, request, id):
+        form = MessageForm()
+        animal = Animal.objects.get(pk=id)
+        owner = animal.user
+        owner_email = owner.email
+        # form = self.form_class()
+        context = {'form': form}
+        return render(request, 'message.html', context)
 
-        return redirect('start.html')
+    def post(self, request, id):
+            animal = Animal.objects.get(pk=id)
+            owner = animal.user
+            owner_email = owner.email
+            form = MessageForm(request.POST)
+
+            if form.is_valid():
+                # cnx = {}
+                text = form.cleaned_data['text']
+                email = form.cleaned_data['email']
+                phone = form.cleaned_data['phone']
+                subject = 'Wiadomość adopcyjna'
+                from_email = email
+                to_email = [owner_email]
+                text_content = """
+                {}
+                {}
+                {}
+                """.format(text, phone, email)
+
+                html_c = get_template('message.html')
+                d = {'text': text,
+                     'email': email,
+                     'phone': phone, }
+                html_content = html_c.render(d)
+
+                msg = EmailMultiAlternatives(subject, text_content, from_email, to_email)
+                msg.attach_alternative(html_content, 'detail_animal.html')
+                msg.send()
+            return render(request, 'detail_animal.html')
 
 
-    # def get(self, request, *args, **kwargs):
-    #     form = self.form_class()
-    #     context = {'form': form}
-    #     return render(request, self.template_name, context)
-    #
-    # def post(self, request, *args, **kwargs):
-    #     emailSend = False
-    #     form = self.form_class(request.POST)
-    #
-    #     if form.is_valid():
-    #         subject = "Wiadomość została wysłana"
-    #         text = form.cleaned_data['text']
-    #         email = form.cleaned_data['email']
-    #         phone = form.cleaned_data['phone']
-    #         animal = form.cleaned_data['animal']
-    #
-    #         send_mail(subject, message=text, from_email='nana83@interia.pl',
-    #                   recipient_list=[email], fail_silently=False)
-    #         emailSend = True
-    #     else:
-    #         form = MessageForm()
-    #
-    #     return render(request, 'start.html', {form: 'form', emailSend:'emailSend'})
+# subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
+# text_content = 'This is an important message.'
+# html_content = '<p>This is an <strong>important</strong> message.</p>'
+# msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+# msg.attach_alternative(html_content, "text/html")
+#
 
-
+# # Mailchimp Settings
+# api_key = settings.MAILCHIMP_API_KEY
+# server = settings.MAILCHIMP_DATA_CENTER
+# list_id = settings.MAILCHIMP_EMAIL_LIST_ID
+#
+# # Subscription Logic
+# def subscribe(email, text, phone):
+#     """
+#      Contains code handling the communication to the mailchimp api
+#      to create a contact/member in an audience/list.
+#     """
+#
+#     mailchimp = Client()
+#     mailchimp.set_config({
+#         "api_key": api_key,
+#         "server": server,
+#     })
+#
+#     member_info = {
+#         "email_address": email,
+#         'text': text,
+#         'phone': phone,
+#         "status": "subscribed",
+#     }
+#
+#     try:
+#         response = mailchimp.lists.add_list_member(list_id, member_info)
+#         print("response: {}".format(response))
+#     except ApiClientError as error:
+#         print("An exception occurred: {}".format(error.text))
+#
+#
+# class MessageView(View):
+#     # template_name = 'message.html'
+#     # form_class = MessageForm
+#     def get(self, request, id):
+#         form = MessageForm()
+#         animal = Animal.objects.get(pk=id)
+#         owner = animal.user
+#         owner_email = owner.email
+#         # form = self.form_class()
+#         context = {'form': form}
+#         return render(request, 'message.html', context)
+#
+#     def post(self, request, id):
+#         animal = Animal.objects.get(pk=id)
+#         owner = animal.user
+#         owner_email = owner.email
+#         form = MessageForm(request.POST)
+#
+#         if form.is_valid():
+#
+#             text = form.cleaned_data['text']
+#             email = form.cleaned_data['email']
+#             phone = form.cleaned_data['phone']
+#             subscribe(email, text, phone)
+#             messages.success(request, 'Email wysłany. Dziękujemy!')
+#
+#         return render(request, 'detail_animal.html')

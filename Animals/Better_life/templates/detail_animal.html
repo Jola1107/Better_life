@@ -1,19 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Kategoria: {{animal.category.name}}</h1>
-    <h1>Imię: {{animal.name}}</h1>
-    <h1>Opis: {{animal.description}}</h1>
-    <h1>Płeć: {{animal.get_sex_display}}</h1>
-    <h1>Wiek: {{animal.age}} </h1>
-    <h1>Waga: {{animal.weight}}</h1>
-    <h1>Rasa/w typie rasy: {{animal.breed}}</h1>
-    <h1>Filmik: </h1><a href="{{animal.movie}}/">{{animal.movie}}</a>
-    <h1>Czy adoptowany: {{animal.is_adopted}}</h1>
-    <h1>Data adopcji: {{animal.closed_date}}</h1>
-    <h1>Data dodania: {{animal.created}}</h1>
-    <h1>Dom tymczasowy: {{animal.user.username}}</h1>
-
+    <h2>Kategoria: {{animal.category.name}}</h2>
+    <h2>Imię: {{animal.name}}</h2>
+    <h2>Opis: {{animal.description}}</h2>
+    <h2>Płeć: {{animal.get_sex_display}}</h2>
+    <h2>Wiek: {{animal.age}} </h2>
+    <h2>Waga: {{animal.weight}}</h2>
+    <h2>Rasa/w typie rasy: {{animal.breed}}</h2>
+    <h2>Filmik: </h2><a href="{{animal.movie}}/">{{animal.movie}}</a>
+    <h2>Czy adoptowany: {{animal.is_adopted}}</h2>
+    <h2>Data adopcji: {{animal.closed_date}}</h2>
+    <h2>Data dodania: {{animal.created}}</h2>
+    <h2>Dom tymczasowy: {{animal.user.username}}</h2>
+<br>
+<br><br><br>
+<h2>
+    <a href="/message/{{animal.id}}/">Wyślij wiadomość w sprawie adopcji</a></br>
+</h2>
+  {% if messages %}
+    {% for message in messages %}
+      <div class="my-5 alert alert-success">
+        <h5 class="m-0">
+            {{ message }}
+        </h5>
+      </div>
+    {% endfor %}
+  {% endif %}
 {% endblock %}
 
 

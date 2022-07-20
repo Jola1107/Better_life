@@ -4,7 +4,7 @@
   <form action="" method="post">
 
       {% csrf_token %}
-
+<!--        {{form}}-->
 
   </form>
 
@@ -15,7 +15,7 @@
         <a href="{% url 'add-animal' %}">Dodaj zwierzę do adopcji</a></br>
         </br>
          <a href="{% url 'adoption' %}">Zwierzęta do adopcji</a></br></br>
-        <a href="{% url 'message' %}">Wyślij wiadomość w sprawie adopcji</a></br>
+
         </br>
         <a href="{% url 'add-category' %}">Dodaj kategorię</a></br>
         {% else %}
@@ -24,10 +24,13 @@
         <a href="{% url 'adoption' %}">Zwierzęta do adopcji</a>
         {% endif %}
     </ul>
-</br>
+</br>        {% if error %}
+    <label position="center" >{{error}}</label>
+                 {% endif %}
             {% if message %}
                 {{message}}
                 {% endif %}
+
 </br>
 </br>
 </br>

@@ -18,12 +18,12 @@ class ProfileForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     repeat_password = forms.CharField(widget=forms.PasswordInput)
 
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get("password")
-        repeat_password = cleaned_data.get("repeat_password")
-        if password != repeat_password:
-             raise ValidationError("Hasła nie są takie same")
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     password = cleaned_data.get("password")
+    #     repeat_password = cleaned_data.get("repeat_password")
+    #     if password != repeat_password:
+    #          raise ValidationError("Hasła nie są takie same")
 
     # def clean(self):
     #     cleaned_data = super().clean()
@@ -74,7 +74,7 @@ class MessageForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea, label='wiadomość:')
     email = forms.EmailField(label='Twój adres email:')
     phone = forms.CharField(label='Twój telefon kontaktowy:')
-    animal = forms.ModelChoiceField(required=False, label='zwierzę, którego dotyczy wiadomośc:', queryset=Animal.objects.all())
+    # animal = forms.ModelChoiceField(required=False, label='zwierzę, którego dotyczy wiadomośc:', queryset=Animal.objects.all())
     # def send_email(self):
     #     text = self.cleaned_data['text']
     #     email = self.cleaned_data['email']

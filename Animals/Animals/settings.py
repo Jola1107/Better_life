@@ -163,8 +163,13 @@ SOCIALACCOUNT_PROVIDERS = {
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST_USER = 'nana83@interia.pl'
-EMAIL_HOST = 'poczta.interia.pl'
-EMAIL_PORT = 465
+EMAIL_HOST_USER = 'jolanta.wisniewska83@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_PASSWORD = 'Magda11112007!'
+EMAIL_HOST_PASSWORD = 'Jolanta110783'
+
+
+MAILCHIMP_API_KEY = "2f11323b8dd36826fca50a1cbc97e4ac-us18"
+MAILCHIMP_DATA_CENTER = "s18"
+MAILCHIMP_EMAIL_LIST_ID = "9c4e4583fa"
