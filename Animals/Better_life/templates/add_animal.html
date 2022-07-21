@@ -3,13 +3,33 @@
 {% block content %}
   <form action="" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-      {% if user.is_authenticated %}
-      {{ form.as_p }}
+        {{form.as_p}}
+<!--      {% if user.is_authenticated %}-->
+
+<!--      {% for hidden in form.hidden_fields %}-->
+<!--        {{hidden}}-->
+<!--      {% endfor %}-->
+
+<!--      {% for field in form %}-->
+<!--        {{field}}</br>-->
+<!--      {% endfor %}-->
+
+<!--       {% for hidden in imageform.hidden_fields %}-->
+<!--        {{hidden}}-->
+<!--      {% endfor %}-->
+
+<!--      {% for field in imageform %}-->
+<!--        {{field}}</br>-->
+<!--      {% endfor %}-->
+
+
+<!--      {{ imageform.management_form }}-->
+<!--        {% for form in imageform %}-->
+<!--            {{form}}-->
+<!--        {% endfor %}-->
 
       <input type="submit" value="Dodaj zwierzę">
   </form>
-<h2>
-    <a href="/image/">Dodaj zdjęcia</a></br>
-</h2>
+
         {% endif %}
 {% endblock %}

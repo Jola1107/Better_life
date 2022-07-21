@@ -122,7 +122,8 @@ class AddAnimalView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         context = {'form': form}
-
+        files = request.FILES.getlist('image')
+        imageform = ImageForm()
         if form.is_valid():
             name = form.cleaned_data['name']
             description = form.cleaned_data['description']
@@ -150,10 +151,19 @@ class AddAnimalView(LoginRequiredMixin, View):
                                                is_adopted=is_adopted, created=created,
                                                closed_date=closed_date, category=cat, user=user)
             # Category.objects.create(animal=animal, name=cat)
-            context['animal'] = animal
-            context['message'] = 'Dodano zwierzę do adopcji'
+                for i in files:
+                    Image.objects.create(animal=animal, path=i)
+                messages.success(request, "Dodano zwierzę do adopcji")
+                context['animal'] = animal
+            # context['message'] = 'Dodano zwierzę do adopcji'
+            #     return redirect(request, 'adoption.html')
+            else:
+                print(form.errors)
 
-        return render(request, 'adoption.html', context)
+        else:
+            form = AnimalForm()
+            imageform = ImageForm()
+        return render(request, 'adoption.html', {'form': form, 'imageform': imageform})
 
 # lista zwierząt do adopcji
 
@@ -163,13 +173,16 @@ class AnimalListView(ListView):
 
 # class AnimalListView(View):
 #     def get(self, request):
-#         animal = Animal.objects.all()
-#         image = Image.objects.filter(animal=animal)
-#
-#         context = {
-#             'animal': animal,
-#             'image': image,
-#         }
+#         animals = Animal.objects.all()
+#         for animal in animals:
+#             img = [image.path for image in animal.image_set.all()]
+#             # animal.image = img.path in img
+#             # image = Image.objects.get(animal=animal)
+#             # if image.path:
+#             context = {
+#                 'animal': animal,
+#                 'image': img,
+#             }
 #         return render(request, 'adoption.html', context)
 
 # detail animal
@@ -177,14 +190,15 @@ class AnimalListView(ListView):
 class DetailAnimalView(View):
     def get(self, request, id):
         animal = Animal.objects.get(pk=id)
-        image = Image.objects.get(animal= animal)
-
-
-        context = {
-            'animal': animal,
-            'image' :image,
-        }
-
+        image = Image.objects.get(animal=animal)
+        if animal:
+            context = {
+                'animal': animal,
+                'image': image
+            }
+        else:
+            # image = Image.objects.filter(animal=animal)
+            context = {'animal': animal }
         return render(request, 'detail_animal.html', context)
 
 

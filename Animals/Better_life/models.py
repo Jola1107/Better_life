@@ -50,7 +50,7 @@ class Animal(models.Model):
         return self.name
 
 class Image(models.Model):
-    title = models.CharField(max_length=24)
+    title = models.CharField(max_length=24, null=True, blank=True)
     path = models.ImageField(null=True, blank=True, upload_to='image/')
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
 

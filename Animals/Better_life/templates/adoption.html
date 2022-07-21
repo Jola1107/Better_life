@@ -1,17 +1,26 @@
 {% extends 'base.html' %}
 
+{% if messages %}
+{% for message in messages %}
+{{ message }}
+{% endfor %}
+{% endif %}
+
 {% block content %}
+
 <h1> Lista zwierząt do adopcji:</h1>
     <ul>
         {% for animal in animal_list %}
+
         <li>
-            <a href="/detail_animal/{{animal.id}}/">{{animal.name}}</a></br>
-            {% if image %}
-<!--                {% for img in image %}-->
-	            <img src='{{image.path.url}}' width="200"/>
-<!--                {% endfor %}-->
-	        {% endif %}
+            <a href="/detail_animal/{{animal.id}}/">{{animal.name}}</a>
+
         </li>
+
         {% endfor %}
+
     </ul>
+<!-- {% for animal in animals %}-->
+<!--         <img src='{{img.path.url}}' width="300"/>-->
+<!--        {% endfor %}-->
 {% endblock %}
