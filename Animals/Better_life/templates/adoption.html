@@ -5,7 +5,12 @@
     <ul>
         {% for animal in animal_list %}
         <li>
-            <a href="/detail_animal/{{animal.id}}/">{{animal.name}}</a>
+            <a href="/detail_animal/{{animal.id}}/">{{animal.name}}</a></br>
+            {% if image %}
+<!--                {% for img in image %}-->
+	            <img src='{{image.path.url}}' width="200"/>
+<!--                {% endfor %}-->
+	        {% endif %}
         </li>
         {% endfor %}
     </ul>

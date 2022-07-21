@@ -7,6 +7,9 @@
 <!--        {{form}}-->
 
   </form>
+                {% if message %}
+                {{message}}
+                {% endif %}
 
     <ul>
 
@@ -27,9 +30,7 @@
 </br>        {% if error %}
     <label position="center" >{{error}}</label>
                  {% endif %}
-            {% if message %}
-                {{message}}
-                {% endif %}
+
 
 </br>
 </br>

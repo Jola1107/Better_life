@@ -51,8 +51,11 @@ class Animal(models.Model):
 
 class Image(models.Model):
     title = models.CharField(max_length=24)
-    path = models.ImageField()
+    path = models.ImageField(null=True, blank=True, upload_to='image/')
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
 
 class Message(models.Model):
     text = models.TextField()

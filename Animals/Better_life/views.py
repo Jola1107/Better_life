@@ -2,18 +2,18 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
 from .forms import (LoginUserForm, ProfileForm, CategoryForm,
-                    AnimalForm, MessageForm)
+                    AnimalForm, MessageForm, ImageForm)
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth import get_user_model, authenticate, login, logout
 User = get_user_model()
-from .models import Profile, Animal, Message, Category
+from .models import Profile, Animal, Message, Category, Image
 from django.views.generic import FormView, CreateView, DeleteView, UpdateView, ListView
 from django.core.mail import send_mail, BadHeaderError, EmailMultiAlternatives
 from django.template.loader import get_template
+from django.contrib.auth.decorators import login_required
 
-
-# from django.contrib import messages
+from django.contrib import messages
 # from django.conf import settings
 # from mailchimp_marketing import Client
 # from mailchimp_marketing.api_client import ApiClientError
@@ -153,7 +153,7 @@ class AddAnimalView(LoginRequiredMixin, View):
             context['animal'] = animal
             context['message'] = 'Dodano zwierzę do adopcji'
 
-        return render(request, 'start.html', context)
+        return render(request, 'adoption.html', context)
 
 # lista zwierząt do adopcji
 
@@ -161,16 +161,28 @@ class AnimalListView(ListView):
     model = Animal
     template_name = 'adoption.html'
 
+# class AnimalListView(View):
+#     def get(self, request):
+#         animal = Animal.objects.all()
+#         image = Image.objects.filter(animal=animal)
+#
+#         context = {
+#             'animal': animal,
+#             'image': image,
+#         }
+#         return render(request, 'adoption.html', context)
 
 # detail animal
 
 class DetailAnimalView(View):
     def get(self, request, id):
         animal = Animal.objects.get(pk=id)
+        image = Image.objects.get(animal= animal)
 
 
         context = {
-            'animal': animal
+            'animal': animal,
+            'image' :image,
         }
 
         return render(request, 'detail_animal.html', context)
@@ -262,6 +274,56 @@ class MessageView(View):
                 msg.send()
             return render(request, 'detail_animal.html')
 
+class ImageView(View):
+    template_name = 'image.html'
+    form_class = ImageForm
+
+    def get(self, request, *args, id):
+        animal = Animal.objects.get(pk=id)
+        form = self.form_class()
+        context = {'form': form}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, id):
+        animal = Animal.objects.get(pk=id)
+        form = self.form_class(request.POST, request.FILES)
+        context = {form:'form'}
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            path = form.cleaned_data['path']
+            # animal = form.cleaned_data['animal']
+            user = request.user
+            if user.is_authenticated:
+                image = Image.objects.create(title=title, path=path, animal=animal)
+                # img = image.animal
+                context = {'title': title, 'path': path, 'image': image}
+        return render(request, 'start.html', context)
+
+
+
+# class ImageView(CreateView):
+#     model = Image
+#     fields = ['title', 'path', 'animal']
+#     template_name = 'image.html'
+#     success_url = '/detail_animal'
+
+# @ login_required
+
+
+# def image_create(request):
+#     if request.method == 'POST':
+#         form = ImageForm(data=request.POST)
+#         if form.is_valid():
+#             cd = form.cleaned_data
+#             new_item = form.save(commit=False)
+#             new_item.user = request.user
+#             new_item.save()
+#             messages.success(request, 'Obraz został dodany')
+#             return redirect(new_item.get_absolute_url())
+#         else:
+#             form = ImageForm(data=request.GET)
+#
+#         return render(request, 'detail_animal.html', {'section': 'images', 'form': form})
 
 # subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
 # text_content = 'This is an important message.'

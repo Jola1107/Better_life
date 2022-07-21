@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from Better_life import views as ex_views
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +33,6 @@ urlpatterns = [
     path('add_category/', ex_views.AddCategoryView.as_view(), name='add-category'),
     path('for_adoption/', ex_views.AnimalListView.as_view(), name='adoption'),
     path('detail_animal/<int:id>/', ex_views.DetailAnimalView.as_view(), name='detail-animal'),
-]
+    path('image/<int:id>/', ex_views.ImageView.as_view(), name='image'),
+    # path('image/', image_create, name='image'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if user.is_authenticated %}
   <form action="" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-      {% if user.is_authenticated %}
       {{ form.as_p }}
 
-      <input type="submit" value="Dodaj zwierzę">
+      <input type="submit" value="Dodaj zdjęcia">
   </form>
-<h2>
-    <a href="/image/">Dodaj zdjęcia</a></br>
-</h2>
-        {% endif %}
+{% endif %}
+    <ul>
+
+    </ul>
+
 {% endblock %}

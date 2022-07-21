@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+</br></br></br></br>
+            {% if image %}
+	            <img src='{{image.path.url}}' width="300"/>
+	        {% endif %}
+
     <h2>Kategoria: {{animal.category.name}}</h2>
     <h2>Imię: {{animal.name}}</h2>
     <h2>Opis: {{animal.description}}</h2>
@@ -17,6 +22,9 @@
 <br><br><br>
 <h2>
     <a href="/message/{{animal.id}}/">Wyślij wiadomość w sprawie adopcji</a></br>
+</h2>
+<h2>
+    <a href="/image/{{animal.id}}/">Dodaj zdjęcia</a></br>
 </h2>
   {% if messages %}
     {% for message in messages %}
