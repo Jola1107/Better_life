@@ -163,7 +163,7 @@ class AddAnimalView(LoginRequiredMixin, View):
         else:
             form = AnimalForm()
             imageform = ImageForm()
-        return render(request, 'adoption.html', {'form': form, 'imageform': imageform})
+        return render(request, 'start.html', {'form': form, 'imageform': imageform})
 
 # lista zwierząt do adopcji
 
@@ -190,15 +190,9 @@ class AnimalListView(ListView):
 class DetailAnimalView(View):
     def get(self, request, id):
         animal = Animal.objects.get(pk=id)
-        image = Image.objects.get(animal=animal)
-        if animal:
-            context = {
-                'animal': animal,
-                'image': image
-            }
-        else:
+
             # image = Image.objects.filter(animal=animal)
-            context = {'animal': animal }
+        context = {'animal': animal }
         return render(request, 'detail_animal.html', context)
 
 

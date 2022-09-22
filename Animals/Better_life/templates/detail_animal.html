@@ -2,10 +2,12 @@
 
 {% block content %}
 </br></br></br></br>
+    {% for image in animal.image_set.all %}
             {% if image %}
 	            <img src='{{image.path.url}}' width="300"/>
 	        {% endif %}
-
+    {% endfor %}
+</br>
     <h2>Kategoria: {{animal.category.name}}</h2>
     <h2>Imię: {{animal.name}}</h2>
     <h2>Opis: {{animal.description}}</h2>

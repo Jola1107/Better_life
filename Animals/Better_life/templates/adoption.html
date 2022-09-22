@@ -9,17 +9,25 @@
 {% block content %}
 
 <h1> Lista zwierząt do adopcji:</h1>
+
     <ul>
         {% for animal in animal_list %}
-
+<div>
         <li>
             <a href="/detail_animal/{{animal.id}}/">{{animal.name}}</a>
-
+            {% for image in animal.image_set.all %}
+            {% if image %}
+	            <img src='{{image.path.url}}' width="100"/>
+	        {% endif %}
+    {% endfor %}</br>
+</br>
+</br>
         </li>
 
         {% endfor %}
-
+</div>
     </ul>
+
 <!-- {% for animal in animals %}-->
 <!--         <img src='{{img.path.url}}' width="300"/>-->
 <!--        {% endfor %}-->
