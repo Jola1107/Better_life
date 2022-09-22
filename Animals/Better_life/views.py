@@ -299,39 +299,20 @@ class ImageView(View):
         if form.is_valid():
             title = form.cleaned_data['title']
             path = form.cleaned_data['path']
-            # animal = form.cleaned_data['animal']
+
             user = request.user
             if user.is_authenticated:
                 image = Image.objects.create(title=title, path=path, animal=animal)
-                # img = image.animal
+
                 context = {'title': title, 'path': path, 'image': image}
         return render(request, 'start.html', context)
 
 
 
-# class ImageView(CreateView):
-#     model = Image
-#     fields = ['title', 'path', 'animal']
-#     template_name = 'image.html'
-#     success_url = '/detail_animal'
-
-# @ login_required
 
 
-# def image_create(request):
-#     if request.method == 'POST':
-#         form = ImageForm(data=request.POST)
-#         if form.is_valid():
-#             cd = form.cleaned_data
-#             new_item = form.save(commit=False)
-#             new_item.user = request.user
-#             new_item.save()
-#             messages.success(request, 'Obraz został dodany')
-#             return redirect(new_item.get_absolute_url())
-#         else:
-#             form = ImageForm(data=request.GET)
-#
-#         return render(request, 'detail_animal.html', {'section': 'images', 'form': form})
+
+
 
 # subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
 # text_content = 'This is an important message.'
