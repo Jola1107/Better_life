@@ -1,20 +1,42 @@
+{% load bootstrap4 %}
 {% load static %}
 <!doctype html>
-<html>
-    <head><meta charset="utf-8"></head>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8"></head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Better Life</title>
+
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+    </head>
     <body>
     <p>Zalogowany użytkownik: {{user}} </p>
-        <img src="{% static 'logo.jpg' %}" width="500px" height="200px">
+        <img src="{% static 'logo.jpg' %}" width="400px" height="200px">
 
         {% block content %}
         {% endblock %}
-
-    </body>
-
+        <nav class="navbar bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">
+                <img src="{% static 'logo.jpg' %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                Better Life
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+            
+                    
+              </a>
+            </div>
+          </nav>
+    
+    <ul class="'navbar-nav ml-auto"></ul>
     {% if user.is_anonymous %}
 
         <a href="{%url  'login-user'%}">Zaloguj</a>
     {% else %}
         <a href="{%url  'logout'%}">Wyloguj</a>
     {% endif %}
+    </body>
 </html>

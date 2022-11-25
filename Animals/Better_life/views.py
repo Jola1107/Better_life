@@ -215,6 +215,8 @@ class AddCategoryView(View):
             context['category'] = category
         return render(request, 'start.html', context)
 
+            
+
 
 
 # send message
@@ -239,15 +241,17 @@ class AddCategoryView(View):
 #
 #         return redirect('start.html')
 
+
 class MessageView(View):
-    # template_name = 'message.html'
-    # form_class = MessageForm
+
+    template_name = 'message.html'
+    form_class = MessageForm
     def get(self, request, id):
         form = MessageForm()
         animal = Animal.objects.get(pk=id)
         owner = animal.user
         owner_email = owner.email
-        # form = self.form_class()
+        form = self.form_class()
         context = {'form': form}
         return render(request, 'message.html', context)
 
