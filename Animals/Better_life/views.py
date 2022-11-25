@@ -1,3 +1,4 @@
+import random
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
@@ -313,7 +314,20 @@ class ImageView(View):
 
 
 
-
+class LandingPageView(View):
+    def get(self, request, *args, **kwargs):
+        animal_all = Animal.objects.filter()
+        animal_list = []
+        for animal_name in animal_all:
+            animal_list.append(animal_name.name)
+        random.shuffle(animal_list)
+        animal1 = animal_list[0]
+        animal2 = animal_list[1]
+        animal3 = animal_list[2]
+        return render(request, 'start.html', context={"animal1": animal1,
+                                                      'animal2': animal2,
+                                                      'animal3': animal3,
+                                                      })
 
 
 

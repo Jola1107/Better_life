@@ -66,6 +66,7 @@ class CategoryForm(forms.Form):
 class ImageForm(forms.ModelForm):
     path = forms.ImageField(label = 'Dodaj zdjęcie',
                             widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    title = forms.CharField(label='nazwa')
     class Meta:
         model = Image
         fields = ['title', 'path']

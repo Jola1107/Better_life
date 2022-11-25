@@ -3,6 +3,8 @@
 
 
 {% block content %}
+<div class="jumbotron">
+  <h3 class="display-4">Logowanie użytkownika</h3></br>
   <form action="" method="post">
       {% csrf_token %}
         <button><a href="{% provider_login_url 'facebook' method='oauth2' %}">Zaloguj przez Facebook</a> </button></br>
@@ -14,8 +16,7 @@
       <input type="submit" value="login"></br></br>
 
   </form>
-    <ul>
-
-    </ul>
+</div>
+ 
 
 {% endblock %}

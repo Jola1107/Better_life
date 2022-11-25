@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-</br></br></br></br>
+<div class="jumbotron">
+  <h3 class="display-4">Informacje o: {{animal.name}}</h3></br>
+</br>
     {% for image in animal.image_set.all %}
             {% if image %}
 	            <img src='{{image.path.url}}' width="300"/>
@@ -21,6 +23,7 @@
     <h2>Data dodania: {{animal.created}}</h2>
     <h2>Dom tymczasowy: {{animal.user.username}}</h2>
 <br>
+</div>
 <br><br><br>
 <h2>
     <a href="/message/{{animal.id}}/">Wyślij wiadomość w sprawie adopcji</a></br>

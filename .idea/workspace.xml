@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="799aacc7-fd6a-4c8d-be75-7a4354ffd74f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/45a8ef19-66f3-473c-abbc-379d03563597.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/45a8ef19-66f3-473c-abbc-379d03563597.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/Animals/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Animals/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/Better_life/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Better_life/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/Better_life/templates/detail_animal.html" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Better_life/templates/detail_animal.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/Better_life/templates/start.html" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Better_life/templates/start.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/Better_life/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/Better_life/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Animals/animal" beforeDir="false" afterPath="$PROJECT_DIR$/Animals/animal" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,19 +33,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/root2/kurs_python/ONL_PYT_W_16_zaawansowane_django",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/root2/parleto&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -69,6 +65,17 @@
       <workItem from="1657875797028" duration="29598000" />
       <workItem from="1657957669979" duration="2325000" />
       <workItem from="1658218810385" duration="11882000" />
+      <workItem from="1658386835870" duration="24880000" />
+      <workItem from="1658560998561" duration="3641000" />
+      <workItem from="1659973655050" duration="104000" />
+      <workItem from="1660811732909" duration="4414000" />
+      <workItem from="1661417000398" duration="3198000" />
+      <workItem from="1662967575830" duration="1367000" />
+      <workItem from="1663839572135" duration="8911000" />
+      <workItem from="1664813432124" duration="295000" />
+      <workItem from="1664813804225" duration="2000" />
+      <workItem from="1664813859046" duration="2000" />
+      <workItem from="1664815540289" duration="3000" />
     </task>
     <servers />
   </component>

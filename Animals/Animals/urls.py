@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     # path('', include('main.urls')),
-    path('', ex_views.StartView.as_view(), name='start'),
+    path('', ex_views.LandingPageView.as_view(), name='start'),
     path('login/', ex_views.LoginUserView.as_view(), name='login-user'),
     path('logout/', ex_views.LogoutView.as_view(), name='logout'),
     path('register/', ex_views.AddProfileUserView.as_view(), name='register'),

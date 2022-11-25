@@ -11,11 +11,72 @@
         {% bootstrap_javascript jquery='full' %}
     </head>
     <body>
-    <p>Zalogowany użytkownik: {{user}} </p>
+        <nav class="'navbar navbar-expand-md navbar-light bg-light mb-4 border">
+            <a class="'navabr-brand" href="{% url 'start' %}">Better life
+            <img src="{% static 'logo.jpg' %}" alt="Logo" width="100" height="50" class="d-inline-block align-text-top"></a>
+            <!-- <button class="'navbar-toggler" type="button" data-toggle="'collapse"
+            date-tsrget="#navbarCollapse" aria-controls="'navbarCollapse"
+            aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggle-icon"></span>
+            </button> -->
+            
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            {% if user.is_authenticated %}
+        
+            <ul class="navbar-nav mr-auto">
+                <li class="'nav-item">
+                    <a class="nav-link" href="{% url 'adoption' %}">Zwierzęta do adopcji</a>
+                </li>
+                <li class="'nav-item">
+                    <a class="nav-link" href="{% url 'add-animal' %}">Dodaj zwierzę do adopcji</a>
+                </li>
+                
+                <li class="'nav-item">
+                    <a class="nav-link" href="{% url 'add-category' %}">Dodaj kategorię</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                
+                    <li class="nav-item">
+                        <span class="navbar-text">Witaj, {{ user }}.</span>
+                    </li> 
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url  'logout'%}">Wyloguj</a>
+                    </li>
+                {% else %}
+                <li class="'nav-item">
+                    <a class="nav-link" href="{% url 'adoption' %}">Zwierzęta do adopcji</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url  'register'%}">Rejestracja</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url  'login-user'%}">Zaloguj</a>
+                </li> 
+                {% endif %}
+            </ul>
+        </div>
+        </nav>
+
+        <main role="main" class="container">
+            <div class="pb-2 mb-2 border-bottom">
+                {% block page_header %} {% endblock page_header %}
+            </div>
+            <div>
+                {% block content %}
+                {% endblock %} 
+            </div>
+        </main>
+
+    </body>
+</html>
+
+
+
+    <!-- <p>Zalogowany użytkownik: {{user}} </p>
         <img src="{% static 'logo.jpg' %}" width="400px" height="200px">
 
-        {% block content %}
-        {% endblock %}
+       
         <nav class="navbar bg-light">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">
@@ -37,6 +98,6 @@
         <a href="{%url  'login-user'%}">Zaloguj</a>
     {% else %}
         <a href="{%url  'logout'%}">Wyloguj</a>
-    {% endif %}
-    </body>
-</html>
+    {% endif %} -->
+<!--     </body>
+</html> -->

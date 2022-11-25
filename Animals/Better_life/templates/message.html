@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="jumbotron">
   <form action="" method="post">
 
       {% csrf_token %}
@@ -8,6 +9,6 @@
             <input type="submit" value="wyślij wiadomość">
 
   </form>
-
+</div>
 
 {% endblock %}

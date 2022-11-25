@@ -7,9 +7,8 @@
 {% endif %}
 
 {% block content %}
-
-<h1> Lista zwierząt do adopcji:</h1>
-
+<div class="jumbotron">
+    <h1 class="display-3">Zwierzęta do adopcji</h1></br>
     <ul>
         {% for animal in animal_list %}
 <div>
@@ -27,6 +26,11 @@
         {% endfor %}
 </div>
     </ul>
+    
+</div>
+
+
+    
 
 
 {% endblock %}
